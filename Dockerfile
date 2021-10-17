@@ -1,14 +1,14 @@
 FROM ubuntu:focal
 
-# 1. Update repositories
+# Update repositories
 RUN apt-get update
 
-# 2. Install latest Python
+# Install latest Python
 RUN apt-get install -y python3 python3-pip && \
     update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1 && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
-# 3. Install WebKit dependencies
+# Install WebKit dependencies
 RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-install-recommends \
     libwoff1 \
     libopus0 \
@@ -31,14 +31,14 @@ RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-install-recommends 
     libgtk-3-0 \
     libharfbuzz-icu0
 
-# 4. Install gstreamer and plugins to support video playback in WebKit.
+# Install gstreamer and plugins to support video playback in WebKit.
 RUN apt-get install -y --no-install-recommends \
     libgstreamer-gl1.0-0 \
     libgstreamer-plugins-bad1.0-0 \
     gstreamer1.0-plugins-good \
     gstreamer1.0-libav
 
-# 5. Install Chromium dependencies
+# Install Chromium dependencies
 RUN apt-get install -y --no-install-recommends \
     libnss3 \
     libxss1 \
@@ -46,32 +46,32 @@ RUN apt-get install -y --no-install-recommends \
     fonts-noto-color-emoji \
     libxtst6
 
-# 6. Install Firefox dependencies
+# Install Firefox dependencies
 RUN apt-get install -y --no-install-recommends libdbus-glib-1-2 libxt6
 
-# 7. Install ffmpeg to bring in audio and video codecs necessary for playing videos in Firefox.
+# Install ffmpeg to bring in audio and video codecs necessary for playing videos in Firefox.
 RUN apt-get install -y --no-install-recommends ffmpeg libffi-dev
 
-# 8. (Optional) Install XVFB if there's a need to run browsers in headful mode
+# (Optional) Install XVFB if there's a need to run browsers in headful mode
 RUN apt-get install -y --no-install-recommends xvfb
 
-# 9. Source dir for our scripts
+# Source dir for our scripts
 RUN mkdir src
 
-# 10. Set working dir
+# Set working dir
 WORKDIR src
 
-# 11. Add dependencies for the scripts
+# Add dependencies for the scripts
 COPY requirements.txt /
 
-# 12. Add source code for the script to be executed
+# Add source code for the script to be executed
 COPY main.py .
 
-# 13. Install our dependencies
+# Install our dependencies
 RUN pip install playwright
 RUN playwright install
 RUN pip install -r /requirements.txt
 
-# 14. Execute our scripts inside the container
+# Execute our scripts inside the container
 # Important: if you need run headless=True run command with xvfb-run
 ENTRYPOINT xvfb-run python main.py

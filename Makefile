@@ -1,11 +1,22 @@
 SHELL=/bin/bash
 
-build-image:
-	docker build --pull --rm -t playwright-docker "."
+build-all-browsers-image:
+	docker build --pull --rm -t playwright-docker .
 
-run-image:
-	docker run --rm -it --name playwright playwright-docker
+run-all-browsers-image:
+	docker run --rm -it --name playwright-docker playwright-docker
 
-build-and-run:
-	make build-image
-	make run-image
+build-chromium-image:
+	docker build --pull --rm -t playwright-chromium -f ./chromium/Dockerfile.chromium .
+
+run-chromium-image:
+	docker run --rm -it --name playwright-chromium playwright-chromium
+
+build-firefox-image:
+	docker build --pull --rm -t playwright-firefox -f ./firefox/Dockerfile.firefox .
+
+run-firefox-image:
+	docker run --rm -it --name playwright-firefox playwright-firefox
+
+prune-system:
+	docker system prune -f
