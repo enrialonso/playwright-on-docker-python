@@ -44,10 +44,9 @@ chromium >>> Fast and reliable end-to-end testing for modern web apps | Playwrig
 firefox >>> Fast and reliable end-to-end testing for modern web apps | Playwright
 ```
 
-### Important
+### Important 
 
 For run scripts inside de container and `headless==False` need put before the run command `xvfb-run`, this command enable
-playwright to open a window browser.
-
+playwright to open a window browser. [Playwright Documentation about **Xvfb**](https://playwright.dev/python/docs/ci/#running-headed)
 
 Make with ❤️ 
