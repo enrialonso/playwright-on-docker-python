@@ -72,5 +72,6 @@ RUN pip install playwright
 RUN playwright install
 RUN pip install -r /requirements.txt
 
-# 14. Excute our scripts inside the container
+# 14. Execute our scripts inside the container
+# Important: if you need run headless=True run command with xvfb-run
 ENTRYPOINT xvfb-run python main.py

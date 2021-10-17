@@ -1,5 +1,4 @@
 SHELL=/bin/bash
-.ONESHELL:
 
 build-image:
 	docker build --pull --rm -t playwright-docker "."
